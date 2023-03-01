@@ -1,8 +1,8 @@
 // GITHUB BAK
 // YAPILACAKLAR KONTROL ET
-// 1-) Mola suresinde dakikalar saniyenin 00'i ile eslestiginde tek basamak olarak gozukuyor. Cift basamak olmali.
+// 1-) Mola suresinde dakikalar saniyenin 00'i ile eslestiginde tek basamak olarak gozukuyor. Cift basamak olmali. (ACILIYETI YOK AMA UNUTMA)
 // 2-) Mola bittiginde tekrardan FOCUS TIME baslatilmali ve bunun kontrolu COUNTER ile yapilmali. Counter 4e ulastiginda uygulama sonlanacak.
-// 3-)
+// 3-) Sure bittikten sonra tekrar baslatirsak. 24 yerine 25'ten basliyor. Duzeltilmesi lazim.
 
 //  ViewController.swift
 //  Stay Focus
@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     
     var focusMinutesTimer = Timer()
     var shortMinutesTimer = Timer()
-    var longMinutesTimer = Timer()
     
     var secondsTimer = Timer()
     
@@ -23,14 +22,15 @@ class ViewController: UIViewController {
     let pauseButton = SFActionButton()
     let stopButton = SFActionButton()
     
-    var focusMinutesLabel = SFTimeLabel(text: "02")
+    var focusMinutesLabel = SFTimeLabel(text: "01")
     let secondsLabel = SFTimeLabel(text: "00")
     
     var shortMinutesLabel = SFTimeLabel(text: "05")
     
-    var longMinutesLabel = SFTimeLabel(text: "31")
-    
     var pauseMu:Bool = true
+    
+    let focusView = SFView(text: "Focus")
+    let breakView = SFView(text: "Break")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,9 @@ class ViewController: UIViewController {
         pauseButton.isHidden = true
         stopButton.isHidden = true
         shortMinutesLabel.isHidden = true
-        longMinutesLabel.isHidden = true
+//        longMinutesLabel.isHidden = true
+        
+        breakView.isHidden = true
         
         configure()
     }
@@ -52,6 +54,7 @@ class ViewController: UIViewController {
     private func configure(){
         configureUI()
         rightBarButtonItem()
+        configureSFViews()
     }
     
     private func rightBarButtonItem(){
@@ -64,7 +67,7 @@ class ViewController: UIViewController {
         rootVC.callBackForSomething = { value in
             self.focusMinutesLabel.text = "\(Int(value.focusTime))"
             self.shortMinutesLabel.text = "\(Int(value.shortBreakTime))"
-            self.longMinutesLabel.text  = "\(Int(value.longBreakTime))"
+//            self.longMinutesLabel.text  = "\(Int(value.longBreakTime))"
         }
         let navVC = UINavigationController(rootViewController: rootVC)
         navVC.modalPresentationStyle = .fullScreen
@@ -77,7 +80,7 @@ class ViewController: UIViewController {
         
         print("Focus Time       : \(focusMinutesLabel.text!)")
         print("Short Break Time : \(shortMinutesLabel.text!)")
-        print("Long Break Time  : \(longMinutesLabel.text!)")
+//        print("Long Break Time  : \(longMinutesLabel.text!)")
         
         startButton.isHidden = true
         pauseButton.isHidden = false
@@ -85,20 +88,22 @@ class ViewController: UIViewController {
         
         let minutesTimeValue = Int(focusMinutesLabel.text!)!
         focusMinutesLabel.text = String(minutesTimeValue - 1)
-        secondsLabel.text = "09"
+        secondsLabel.text = "59"
         
         //MARK: - Seconds Label Work Method
         secondsTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(secondsTimerStart), userInfo: nil, repeats: true)
         
-        //MARK: - Minutes Label Work Method
-        focusMinutesTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(focusMinutesTimerStart), userInfo: nil, repeats: true)
+        //MARK: - Focus Minutes Label Work Method
+        focusMinutesTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(focusMinutesTimerStart), userInfo: nil, repeats: true)
         
-        shortMinutesTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(shortMinutesTimerStart), userInfo: nil, repeats: true)
+        //MARK: - Break Minutes Label Work Method
+        shortMinutesTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(shortMinutesTimerStart), userInfo: nil, repeats: true)
     }
     
     //MARK: - Short Minutes Timer Set
     @objc func shortMinutesTimerStart(){
         var shortTimeValue = Int(shortMinutesLabel.text!)!
+        secondsLabel.text = "59"
         shortMinutesLabel.text = String(shortTimeValue)
         shortTimeValue -= 1
         shortMinutesLabel.text = String(shortTimeValue)
@@ -106,7 +111,7 @@ class ViewController: UIViewController {
         if ( shortTimeValue < 10){
             shortMinutesLabel.text = "0\(shortTimeValue)"
             if shortTimeValue == -1 {
-                shortMinutesLabel.text = "00"
+                shortMinutesLabel.text = "59"
             }
         }
     }
@@ -141,17 +146,15 @@ class ViewController: UIViewController {
         secondsLabel.text = String(secondsTimeValue)
         
         if (secondsTimeValue == 0 && minutesTimeValue == 0){
+            focusView.isHidden = true
+            breakView.isHidden = false
             focusMinutesLabel.isHidden = true
             shortMinutesLabel.isHidden = false
             shortMinutesLabel.text = String(shortTimeValue)
             
             if (shortTimeValue == 0 && secondsTimeValue == 00){
-                
-                secondsTimer.invalidate()
-                focusMinutesTimer.invalidate()
-                shortMinutesTimer.invalidate()
-                // sayac ekle 
-                print("Bitti.")
+                // sayac ekle
+                done()
             }
         }
         //MARK: - Label 0'dan kucuk kontrolu.
@@ -160,11 +163,29 @@ class ViewController: UIViewController {
         }
     }
     
+    private func done(){
+        secondsTimer.invalidate()
+        focusMinutesTimer.invalidate()
+        shortMinutesTimer.invalidate()
+        print("Bitti")
+        
+        startButton.isHidden = false
+        
+        pauseButton.isHidden = true
+        stopButton.isHidden = true
+        
+        focusView.isHidden = false
+        breakView.isHidden = true
+        
+        focusMinutesLabel.text = "25" // Kontrol et ikisini de
+        shortMinutesLabel.text = "25"
+    }
+    
     @objc func pauseButtonActions(){
         focusMinutesTimer.invalidate()
         secondsTimer.invalidate()
         shortMinutesTimer.invalidate()
-        longMinutesTimer.invalidate()
+//        longMinutesTimer.invalidate()
         
         if pauseMu == true {
             pauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -197,12 +218,12 @@ class ViewController: UIViewController {
                 
                 self.focusMinutesLabel.isHidden = false
                 self.shortMinutesLabel.isHidden = true
-                self.longMinutesLabel.isHidden = true
+//                self.longMinutesLabel.isHidden = true
                 
                 self.focusMinutesTimer.invalidate()
                 self.secondsTimer.invalidate()
                 self.shortMinutesTimer.invalidate()
-                self.longMinutesTimer.invalidate()
+//                self.longMinutesTimer.invalidate()
                 
                 self.focusMinutesLabel.text = "25"
                 self.secondsLabel.text = "00"
@@ -210,6 +231,26 @@ class ViewController: UIViewController {
             handlerCancel: { actionCancel in
                 // Cancel edildigine aksiyon olmicak.
             })}
+    
+    
+    
+    private func configureSFViews(){
+        view.addSubview(focusView)
+        focusView.stateImage.image = UIImage(named: "Focus")
+        NSLayoutConstraint.activate([
+            focusView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            focusView.widthAnchor.constraint(equalToConstant: 35),
+            focusView.topAnchor.constraint(equalTo: view.topAnchor, constant: 200)
+        ])
+        
+        view.addSubview(breakView)
+        breakView.stateImage.image = UIImage(named: "Break")
+        NSLayoutConstraint.activate([
+            breakView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            breakView.widthAnchor.constraint(equalToConstant: 35),
+            breakView.topAnchor.constraint(equalTo: view.topAnchor, constant: 200)
+        ])
+    }
     
     private func configureUI(){
         startButton.addTarget(self, action: #selector(startButtonActions), for: .touchUpInside)

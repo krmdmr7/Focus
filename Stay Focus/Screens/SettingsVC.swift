@@ -95,7 +95,7 @@ class SettingsVC: UIViewController {
         
         layoutFocusTime()
         layoutShortBreakTime()
-        layoutLongBreakTime()
+//        layoutLongBreakTime()
         
         layoutFocusTimeSlider()
         layoutShortBreakTimeSlider()
@@ -196,7 +196,7 @@ extension SettingsVC {
         
         shortBreakTimeSlider.translatesAutoresizingMaskIntoConstraints = false
         
-        shortBreakTimeSlider.minimumValue = 2
+        shortBreakTimeSlider.minimumValue = 1
         shortBreakTimeSlider.maximumValue = 15
         
         shortBreakTimeSlider.tintColor = .systemPink
@@ -209,32 +209,32 @@ extension SettingsVC {
         ])
     }
     
-    func layoutLongBreakTime(){
-        view.addSubview(longBreakTimeSliderLabel)
-        NSLayoutConstraint.activate([
-            longBreakTimeSliderLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 375),
-            longBreakTimeSliderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40)
-        ])
-
-        view.addSubview(longBreakTimeSliderValueLabel)
-        NSLayoutConstraint.activate([
-            longBreakTimeSliderValueLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 375),
-            longBreakTimeSliderValueLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
-        ])
-
-
-        longBreakTimeSlider.translatesAutoresizingMaskIntoConstraints = false
-
-        longBreakTimeSlider.minimumValue = 15
-        longBreakTimeSlider.maximumValue = 40
-
-        longBreakTimeSlider.tintColor = .systemPink
-
-        view.addSubview(longBreakTimeSlider)
-        NSLayoutConstraint.activate([
-            longBreakTimeSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            longBreakTimeSlider.topAnchor.constraint(equalTo: view.topAnchor, constant: 415),
-            longBreakTimeSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
-        ])
-    }
+//    func layoutLongBreakTime(){
+//        view.addSubview(longBreakTimeSliderLabel)
+//        NSLayoutConstraint.activate([
+//            longBreakTimeSliderLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 375),
+//            longBreakTimeSliderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40)
+//        ])
+//
+//        view.addSubview(longBreakTimeSliderValueLabel)
+//        NSLayoutConstraint.activate([
+//            longBreakTimeSliderValueLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 375),
+//            longBreakTimeSliderValueLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+//        ])
+//
+//
+//        longBreakTimeSlider.translatesAutoresizingMaskIntoConstraints = false
+//
+//        longBreakTimeSlider.minimumValue = 1
+//        longBreakTimeSlider.maximumValue = 40
+//
+//        longBreakTimeSlider.tintColor = .systemPink
+//
+//        view.addSubview(longBreakTimeSlider)
+//        NSLayoutConstraint.activate([
+//            longBreakTimeSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            longBreakTimeSlider.topAnchor.constraint(equalTo: view.topAnchor, constant: 415),
+//            longBreakTimeSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
+//        ])
+//    }
 }

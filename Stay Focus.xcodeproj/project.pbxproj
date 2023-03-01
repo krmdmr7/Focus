@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4141FE1829AFD79500144521 /* SFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141FE1729AFD79500144521 /* SFView.swift */; };
 		4171B496299CB4D90025FFB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4171B495299CB4D90025FFB1 /* AppDelegate.swift */; };
 		4171B498299CB4D90025FFB1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4171B497299CB4D90025FFB1 /* SceneDelegate.swift */; };
 		4171B49A299CB4D90025FFB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4171B499299CB4D90025FFB1 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4141FE1729AFD79500144521 /* SFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFView.swift; sourceTree = "<group>"; };
 		4171B492299CB4D90025FFB1 /* Stay Focus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stay Focus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4171B495299CB4D90025FFB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4171B497299CB4D90025FFB1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				4171B4E0299F7C4D0025FFB1 /* SFSliderView.swift */,
 				4171B4A9299CB8D90025FFB1 /* SFActionButton.swift */,
 				4171B4AB299CC8500025FFB1 /* SFTimeLabel.swift */,
+				4141FE1729AFD79500144521 /* SFView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				4171B49A299CB4D90025FFB1 /* ViewController.swift in Sources */,
 				4171B4E1299F7C4D0025FFB1 /* SFSliderView.swift in Sources */,
 				4171B496299CB4D90025FFB1 /* AppDelegate.swift in Sources */,
+				4141FE1829AFD79500144521 /* SFView.swift in Sources */,
 				4171B4AA299CB8D90025FFB1 /* SFActionButton.swift in Sources */,
 				4171B4AC299CC8500025FFB1 /* SFTimeLabel.swift in Sources */,
 				4171B4B3299CF39D0025FFB1 /* SettingsVC.swift in Sources */,
